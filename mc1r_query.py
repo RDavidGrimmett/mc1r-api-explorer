@@ -90,8 +90,11 @@ def find_longest_orf(sequence):
         orfs.append(match.group(1) + match.group(2))
 
     # Captures the longest orf using max length of the list
-    return max(orfs, key=len, default=None)
-    
+    longest_orf = max(orfs, key=len, default=None)
+
+    return longest_orf
+
+
 # Translates the longest ORF into an amino acid sequence
 #def get_amino_acids():
 
