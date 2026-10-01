@@ -3,15 +3,21 @@
 
 #imported libraries
 import requests
+import json
 
-url = "https://mygene.info/v3/query"
+def get_database():
 
-ext = {
-    "q": "MC1R", "species": "human"
-}
+    url = "https://mygene.info/v3/query"
 
-response = requests.get(url, ext=ext)
+    ext = {
+        "q": "symbol:MC1R", "species": "human"
+    }
 
-data = response.json()
+    response = requests.get(url, ext=ext)
 
-print(data)
+    data = response.json()
+
+    print(data)
+
+if __name__ == "__main__":
+    get_database()
