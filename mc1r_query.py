@@ -22,12 +22,11 @@ def get_ensembl_id():
 
         ensembl_id = data["hits"][0]["ensembl"]["gene"]
 
-        
 
         return ensembl_id
 
 def retrieve_data(ensembl_id):
-    url = "https://rest.ensembl.org/sequence/id/{ensemble_id}"
+    url = f"https://rest.ensembl.org/sequence/id/{ensembl_id}"
 
     params = {
         "type": "genomic"
@@ -43,6 +42,11 @@ def retrieve_data(ensembl_id):
         sequence = response.text
 
         return sequence
+
+    else:
+        print("Reuest failed:", response.status_code)
+        print(response.text)
+        return None
 
 if __name__ == "__main__":
 
