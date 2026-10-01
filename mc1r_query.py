@@ -5,6 +5,7 @@
 import requests
 from pprint import pprint
 
+
 def get_ensembl_id():
 
     url = "https://mygene.info/v3/query"
@@ -24,6 +25,7 @@ def get_ensembl_id():
 
 
         return ensembl_id
+
 
 def retrieve_data(ensembl_id):
     url = f"https://rest.ensembl.org/sequence/id/{ensembl_id}"
