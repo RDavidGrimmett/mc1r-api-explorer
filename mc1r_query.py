@@ -3,9 +3,9 @@
 
 # Imported libraries
 import requests
-from pprint import pprint
 import re
-
+from pprint import pprint
+from Bio.Seq import Seq
 
 # Get ensembl_id from mygene.info
 def get_ensembl_id():
@@ -89,13 +89,14 @@ def find_longest_orf(sequence):
     for match in pattern.finditer(sequence):
         orfs.append(match.group(1) + match.group(2))
 
+    # Captures the longest orf using max length of the list
     return max(orfs, key=len, default=None)
     
 
 # Appends longest ORF to the FASTA file
 def append_fasta():
 
-
+# Runs functions in sequential order
 if __name__ == "__main__":
 
     ensembl_id = get_ensembl_id()
