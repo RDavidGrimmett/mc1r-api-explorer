@@ -1,4 +1,4 @@
-#this is mc1_query.py
+#this is mc1r_query.py
 
 
 #imported libraries
@@ -51,6 +51,7 @@ def retrieve_data(ensembl_id):
 
 def create_fasta(ensembl_id, sequence):
     with open("mc1r_sequence.fasta", "w") as file:
+        file.write(f">{ensembl_id}\n")
         file.write(sequence)
 
 
@@ -59,6 +60,8 @@ if __name__ == "__main__":
     ensembl_id = get_ensembl_id()
 
     sequence = retrieve_data(ensembl_id)
+
+    create_fasta(ensembl_id, sequence)
 
 print("Ensembl ID:", ensembl_id)
 print("Sequence:", sequence)
