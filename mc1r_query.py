@@ -22,7 +22,7 @@ def get_ensembl_id():
 
         ensembl_id = data["hits"][0]["ensembl"]["gene"]
 
-        print(f"Ensembl ID: {ensembl_id}")
+        
 
         return ensembl_id
 
@@ -42,10 +42,13 @@ def retrieve_data(ensembl_id):
     if response.status_code == 200:
         sequence = response.text
 
-        print(sequence)
+        return sequence
 
 if __name__ == "__main__":
 
-ensembl_id = get_ensembl_id()
+    ensembl_id = get_ensembl_id()
 
-retrieve_data(ensembl_id)
+    sequence = retrieve_data(ensembl_id)
+
+print("Ensembl ID:", ensembl_id)
+print("Sequence:", sequence)
