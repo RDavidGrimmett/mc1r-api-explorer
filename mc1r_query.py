@@ -118,7 +118,10 @@ if __name__ == "__main__":
 
     longest_orf = find_longest_orf(sequence)
 
+    protein_seq = get_amino_acids(longest_orf)
+
 print("Ensembl ID:", ensembl_id)
 print("Sequence:", sequence)
 print("Longest_ORF:", longest_orf)
+print("Amino Acids:", protein_seq)
 
