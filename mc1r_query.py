@@ -57,6 +57,9 @@ def create_fasta(ensembl_id, sequence):
         file.write(sequence)
 
 
+def find_orf(sequence):
+    
+
 if __name__ == "__main__":
 
     ensembl_id = get_ensembl_id()
