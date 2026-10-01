@@ -3,15 +3,16 @@
 
 #imported libraries
 import requests
+from pprint import pprint
 
-
-def get_database():
+def get_ensembl_id():
 
     url = "https://mygene.info/v3/query"
 
     params = {
         "q": "symbol:MC1R",
-        "species": "human"
+        "species": "human",
+        "fields": "symbol,ensembl"
     }
 
     response = requests.get(url, params=params)
@@ -19,15 +20,32 @@ def get_database():
     if response.status_code == 200:
         data = response.json()
 
-        gene = data["hits"][0]
+        ensembl_id = data["hits"][0]["ensembl"]["gene"]
 
-        print(f"Gene ID: {gene['_id']}")
-        print(f"Gene Symbol: {gene['symbol']}")
-        print(f"Gene Name: {gene['name']}")
+        print(f"Ensembl ID: {ensembl_id}")
 
-    else:
-        print("Request failed with code:", response.status_code)
+        return ensembl_id
 
+def retrieve_data(ensembl_id):
+    url = "https://rest.ensembl.org/sequence/id/{ensemble_id}"
+
+    params = {
+        "type": "genomic"
+    }
+
+    headers = {
+        "Content-type": "text/plain"
+    }
+
+    response = requests.get(url, params=params, headers=headers)
+
+    if response.status_code == 200:
+        sequence = response.text
+
+        print(sequence)
 
 if __name__ == "__main__":
-    get_database()
+
+ensembl_id = get_ensembl_id()
+
+retrieve_data(ensembl_id)
