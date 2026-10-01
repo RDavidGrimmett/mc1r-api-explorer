@@ -48,6 +48,12 @@ def retrieve_data(ensembl_id):
         print(response.text)
         return None
 
+
+def create_fasta(ensembl_id, sequence):
+    with open("mc1r_sequence.fasta", "w") as file:
+        file.write(sequence)
+
+
 if __name__ == "__main__":
 
     ensembl_id = get_ensembl_id()
