@@ -5,7 +5,7 @@
 import requests
 import re
 from pprint import pprint
-from Bio.Seq import Seq
+#from Bio.Seq import Seq
 
 # Get ensembl_id from mygene.info
 def get_ensembl_id():
@@ -92,9 +92,12 @@ def find_longest_orf(sequence):
     # Captures the longest orf using max length of the list
     return max(orfs, key=len, default=None)
     
+# Translates the longest ORF into an amino acid sequence
+#def get_amino_acids():
+
 
 # Appends longest ORF to the FASTA file
-def append_fasta():
+#def append_fasta():
 
 # Runs functions in sequential order
 if __name__ == "__main__":
@@ -109,4 +112,5 @@ if __name__ == "__main__":
 
 print("Ensembl ID:", ensembl_id)
 print("Sequence:", sequence)
+print("longest:", longest)
 
