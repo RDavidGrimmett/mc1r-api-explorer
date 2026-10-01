@@ -15,9 +15,13 @@ def get_database():
 
     response = requests.get(url, ext=ext)
 
-    data = response.json()
+    if response.status_code == 200:
+        data = response.json()
+        print(f"Gene ID: {data['id']}")
+        print(f"Location: Chromosome {data['seq_region_name']}, Start: {data['start']}")
+    else:
+        print("Request failed with code:", response.status_code)
 
-    print(data)
 
 if __name__ == "__main__":
     get_database()
