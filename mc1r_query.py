@@ -99,6 +99,7 @@ def find_longest_orf(sequence):
 def get_amino_acids(longest_orf):
     orf_dna = Seq(longest_orf) 
 
+    # Translates
     protein_seq = orf_dna.translate()
 
     return protein_seq
