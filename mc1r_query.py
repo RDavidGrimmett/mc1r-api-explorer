@@ -3,22 +3,28 @@
 
 #imported libraries
 import requests
-import json
+
 
 def get_database():
 
     url = "https://mygene.info/v3/query"
 
-    ext = {
-        "q": "symbol:MC1R", "species": "human"
+    params = {
+        "q": "symbol:MC1R",
+        "species": "human"
     }
 
-    response = requests.get(url, ext=ext)
+    response = requests.get(url, params=params)
 
     if response.status_code == 200:
         data = response.json()
-        print(f"Gene ID: {data['id']}")
-        print(f"Location: Chromosome {data['seq_region_name']}, Start: {data['start']}")
+
+        gene = data["hits"][0]
+
+        print(f"Gene ID: {gene['_id']}")
+        print(f"Gene Symbol: {gene['symbol']}")
+        print(f"Gene Name: {gene['name']}")
+
     else:
         print("Request failed with code:", response.status_code)
 
