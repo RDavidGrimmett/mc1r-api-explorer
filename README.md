@@ -14,11 +14,12 @@ A Python script that queries bioinformatics databases programmatically using RES
 
 ## Output Files
 * mc1r_sequence.fasta
+* mc1r_homology_list.txt
 
 ## Reflection 
 
 What you learned about working with RESTful APIs and biological web services that you did not know before this assignment.
->
+> I had no idea these systems even existed before this assignemnt. I'm also blown away that they are free and easily accessable. I would have assumed information like this would be locked behind a massive pay wall, only allowing large corperations to access them.
 
 One part of the workflow that you found most challenging (for example, handling JSON responses, writing FASTA files, finding the longest ORF, using Biopython) and how you worked through that challenge.
 >

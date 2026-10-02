@@ -40,7 +40,7 @@ def get_ensembl_id():
 
 
 # Get DNA sequences from ensembl.org
-def retrieve_data(ensembl_id):
+def get_sequence(ensembl_id):
     
     # Target url, parameters, and headers
     url = f"https://rest.ensembl.org/sequence/id/{ensembl_id}"
@@ -87,6 +87,8 @@ def find_longest_orf(sequence):
     
     # Find all matches in sequence
     for match in pattern.finditer(sequence):
+
+        # Attaches the start and end codons to sequence
         orfs.append(match.group(1) + match.group(2))
 
     # Captures the longest orf using max length of the list
@@ -100,9 +102,9 @@ def get_amino_acids(longest_orf):
     longest_orf_seq = Seq(longest_orf) 
 
     # Translates the longest orf to amino acids
-    amino_acid_seq = longest_orf_seq.translate()
+    amino_acids = longest_orf_seq.translate()
 
-    return amino_acid_seq
+    return amino_acids
 
 
 # Appends Amino Acid Sequence to the FASTA file
@@ -112,23 +114,27 @@ def append_fasta(amino_acid_seq):
             file.write(f"\n{amino_acid_seq}")
 
 
+# Identify Homologous Genes
+def get_homologous_genes():
+     
+
+
 # Runs functions in sequential order
 if __name__ == "__main__":
 
     ensembl_id = get_ensembl_id()
 
-    sequence = retrieve_data(ensembl_id)
+    sequence = get_sequence(ensembl_id)
 
     create_fasta(ensembl_id, sequence)
 
     longest_orf = find_longest_orf(sequence)
 
-    amino_acid_seq = get_amino_acids(longest_orf)
+    amino_acids = get_amino_acids(longest_orf)
 
-    append_fasta(amino_acid_seq)
+    append_fasta(amino_acids)
 
 print("Ensembl ID:", ensembl_id)
 print("Sequence:", sequence)
 print("Longest_ORF:", longest_orf)
-print("Amino Acids:", amino_acid_seq)
-
+print("Amino Acids:", amino_acids)
