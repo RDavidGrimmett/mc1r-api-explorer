@@ -3,6 +3,7 @@
 
 # Imported libraries
 import requests
+import json
 import re
 from pprint import pprint
 from Bio.Seq import Seq
@@ -115,8 +116,27 @@ def append_fasta(amino_acid_seq):
 
 
 # Identify Homologous Genes
-def get_homologous_genes():
+def get_homologous_genes(ensembl_id):
+    url = f"https://rest.ensembl.org/homology/id/human/{ensembl_id}"
      
+    params = {
+         "type": "orthologues",
+         "sequence": "none"
+    }
+
+    headers = {
+         "Content-Type": "application/json"
+    }
+
+    response = requests.get(url, params=params, headers=headers)
+
+    if response.status_code == 200:
+        data = response.json()
+
+        print (data)
+        
+
+      
 
 
 # Runs functions in sequential order
@@ -133,6 +153,8 @@ if __name__ == "__main__":
     amino_acids = get_amino_acids(longest_orf)
 
     append_fasta(amino_acids)
+
+    get_homologous_genes(ensembl_id)
 
 print("Ensembl ID:", ensembl_id)
 print("Sequence:", sequence)
