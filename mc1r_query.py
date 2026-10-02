@@ -97,16 +97,20 @@ def find_longest_orf(sequence):
 
 # Translates the longest ORF into an amino acid sequence
 def get_amino_acids(longest_orf):
-    orf_dna = Seq(longest_orf) 
+    orf_seq = Seq(longest_orf) 
 
     # Translates
-    protein_seq = orf_dna.translate()
+    amino_acid_seq = orf_seq.translate()
 
-    return protein_seq
+    return amino_acid_seq
 
 
-# Appends longest ORF to the FASTA file
-#def append_fasta():
+# Appends Amino Acid Sequence to the FASTA file
+def append_fasta(amino_acid_seq):
+    # Writes the follwoing to a FASTA file
+        with open("mc1r_sequence.fasta", "a") as file:
+            file.write(f"\n{amino_acid_seq}")
+
 
 # Runs functions in sequential order
 if __name__ == "__main__":
@@ -119,10 +123,10 @@ if __name__ == "__main__":
 
     longest_orf = find_longest_orf(sequence)
 
-    protein_seq = get_amino_acids(longest_orf)
+    amino_acid_seq = get_amino_acids(longest_orf)
 
 print("Ensembl ID:", ensembl_id)
 print("Sequence:", sequence)
 print("Longest_ORF:", longest_orf)
-print("Amino Acids:", protein_seq)
+print("Amino Acids:", amino_acid_seq)
 
