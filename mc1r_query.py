@@ -49,15 +49,18 @@ def get_sequence(ensembl_id):
     }
 
     headers = {
-        "Content-type": "text/plain"
+        "Content-type": "application/json"
     }
 
     # Captures data from database in response variable
     response = requests.get(url, params=params, headers=headers)
 
-    # If connection successful, captures sequence as variable
+    # If connection successful, captures the data as variable
     if response.status_code == 200:
-        sequence = response.text
+        data = response.json()
+
+        # Sets the DNA sequence to a variable
+        sequence = data["seq"]
 
         return sequence
     
