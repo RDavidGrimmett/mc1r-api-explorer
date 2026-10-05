@@ -35,9 +35,8 @@ def get_ensembl_id():
 
     # If connection is unsuccessful, print error
     else:
-            print("Reuest failed:", response.status_code)
+            print("Request failed:", response.status_code)
             print(response.text)
-            return None
 
 
 # Get DNA sequences from ensembl.org
@@ -65,9 +64,9 @@ def get_sequence(ensembl_id):
     
     # If connection is unsuccessful, print error
     else:
-        print("Reuest failed:", response.status_code)
+        print("Request failed:", response.status_code)
         print(response.text)
-        return None
+        
 
 
 # Creates a FASTA file with ensembl_id and DNA sequence
@@ -115,8 +114,8 @@ def append_fasta(amino_acid_seq):
             file.write(f"\n{amino_acid_seq}")
 
 
-# Identify Homologous Genes
-def get_homologous_species(ensembl_id):
+# Get homologous genes from ensembl.org
+def get_homologous_genes(ensembl_id):
     url = f"https://rest.ensembl.org/homology/id/human/{ensembl_id}"
     
     params = {
@@ -132,20 +131,39 @@ def get_homologous_species(ensembl_id):
 
     if response.status_code == 200:
 
-        data = response.json()
+        homologous_genes = response.json()
+
+        return homologous_genes
+
+        # If connection is unsuccessful, print error
+    else:
+            print("Request failed:", response.status_code)
+            print(response.text)
+            
+
+
+def get_unique_species(homologous_genes):
 
         species_list = []
 
-        for homology in data["data"][0]["homologies"]:
+        # Creating loop for each set of data
+        for homology in homologous_genes["data"][0]["homologies"]:
 
+            # Capturing only the species names
             species_list.append(homology["target"]["species"])
 
-            species_str = ", ".join(species_list)
+            # Removing duplicates from the list
+            unique_species_list = list(set(species_list))
+
+            # Converting list into string
+            unique_species_str = ", ".join(unique_species_list)
+
+        return unique_species_str
 
 # Creates and writes the list of species to TXT file
-def create_txt(species_str):
+def create_txt(unique_species_str):
     with open ("mc1r_homology_list.txt", "w") as file:
-        file.write(species_str)
+        file.write(unique_species_str)
 
 
 # Runs functions in sequential order
@@ -163,12 +181,16 @@ if __name__ == "__main__":
 
     append_fasta(amino_acids)
 
-    species_str = get_homologous_species(ensembl_id)
+    homologous_genes = get_homologous_genes(ensembl_id)
 
-    create_txt(species_str)
+    unique_species_str = get_unique_species (homologous_genes)
 
-print("Ensembl ID:", ensembl_id)
-print("Sequence:", sequence)
-print("Longest_ORF:", longest_orf)
-print("Amino Acids:", amino_acids)
-print(species_str)
+    create_txt(unique_species_str)
+
+
+#print("Ensembl ID:", ensembl_id)
+#print("Sequence:", sequence)
+#print("Longest_ORF:", longest_orf)
+#print("Amino Acids:", amino_acids)
+#print("Holohous Genes:", homologous_genes)
+#print("Species List", unique_species_str)
