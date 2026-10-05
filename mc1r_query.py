@@ -118,7 +118,7 @@ def append_fasta(amino_acid_seq):
 # Identify Homologous Genes
 def get_homologous_species(ensembl_id):
     url = f"https://rest.ensembl.org/homology/id/human/{ensembl_id}"
-     
+    
     params = {
          "type": "orthologues",
          "sequence": "none"
@@ -142,8 +142,10 @@ def get_homologous_species(ensembl_id):
 
         return species
 
-    
-      
+# Creates and writes the list of species to TXT file
+def create_txt(species):
+    with open ("mc1r_homology_list.txt", "w") as file:
+        file.write(species)
 
 
 # Runs functions in sequential order
