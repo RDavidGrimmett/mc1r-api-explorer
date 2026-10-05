@@ -11,7 +11,7 @@ from Bio.Seq import Seq
 # Get ensembl_id from mygene.info
 def get_ensembl_id():
 
-    # Target url and parameters
+    # Target url and search parameters
     url = "https://mygene.info/v3/query"
     
     params = {
@@ -23,11 +23,11 @@ def get_ensembl_id():
     # Captures data from database in response variable
     response = requests.get(url, params=params)
 
-    # If connection successful, do the following
+    # If connection successful, captures database as variable
     if response.status_code == 200:
         data = response.json()
 
-        # Captures ensmbl_id as variable
+        # Captures just the ensmbl_id as variable
         ensembl_id = data["hits"][0]["ensembl"]["gene"]
 
         # Returns the ensembl_id
@@ -56,7 +56,7 @@ def get_sequence(ensembl_id):
     # Captures data from database in response variable
     response = requests.get(url, params=params, headers=headers)
 
-    # If connection successful, do the following
+    # If connection successful, captures sequence as variable
     if response.status_code == 200:
         sequence = response.text
 
@@ -71,7 +71,7 @@ def get_sequence(ensembl_id):
 # Creates a FASTA file with ensembl_id and DNA sequence
 def create_fasta(ensembl_id, sequence):
     
-    # Writes the follwoing to a FASTA file
+    # Writes the following to a FASTA file in FASTA format
     with open("mc1r_sequence.fasta", "w") as file:
         file.write(f">{ensembl_id}\n")
         file.write(sequence)
@@ -80,17 +80,18 @@ def create_fasta(ensembl_id, sequence):
 # Finds the longest open reading frame (ORF) in DNA seqeunce 
 def find_longest_orf(sequence):
 
-    # Creating list of all matching sequences
+    # Creates a regular expression and a list to hold all the open frames
+    # RegEx: Starts with ATG, followed by any number of three chracter sets, then stops with TAG, TGA, or TAA.
     pattern = re.compile(r'(?=(ATG(?:...)*?)(TAG|TGA|TAA))')
     orfs = []
     
-    # Find all matches in sequence
+    # Finds all matches in sequence
     for match in pattern.finditer(sequence):
 
-        # Attaches the start and end codons to sequence
+        # Attaches the start and end codons to each sequence
         orfs.append(match.group(1) + match.group(2))
 
-    # Captures the longest orf using max length of the list
+    # Captures only the longest ORF using max length of the list
     longest_orf = max(orfs, key=len, default=None)
 
     return longest_orf
@@ -98,9 +99,11 @@ def find_longest_orf(sequence):
 
 # Translates the longest ORF into an amino acid sequence
 def get_amino_acids(longest_orf):
+
+    # Converts the longest ORF DNA string into a Biopython object
     longest_orf_seq = Seq(longest_orf) 
 
-    # Translates the longest orf to amino acids
+    # Translates the longest ORF to amino acids using Biopython
     amino_acids = longest_orf_seq.translate()
 
     return amino_acids
@@ -108,13 +111,16 @@ def get_amino_acids(longest_orf):
 
 # Appends Amino Acid Sequence to the FASTA file
 def append_fasta(amino_acid_seq):
-    # Appends the follwoing to a new line on FASTA file
+        
+    # Appends the following to a new line on FASTA file
         with open("mc1r_sequence.fasta", "a") as file:
             file.write(f"\n{amino_acid_seq}")
 
 
 # Get homologous genes from ensembl.org
 def get_homologous_genes(ensembl_id):
+    
+    # Target url, parameters, and headers
     url = f"https://rest.ensembl.org/homology/id/human/{ensembl_id}"
     
     params = {
@@ -126,8 +132,10 @@ def get_homologous_genes(ensembl_id):
          "Content-Type": "application/json"
     }
 
+    # Captures data from database in response variable 
     response = requests.get(url, params=params, headers=headers)
 
+    # If connection successful, captures all the homologous genes as variable
     if response.status_code == 200:
 
         homologous_genes = response.json()
@@ -142,15 +150,16 @@ def get_homologous_genes(ensembl_id):
 
 def get_unique_species(homologous_genes):
 
+        # List to hold all the species
         species_list = []
 
-        # Creating loop for each set of data
+        # Creating loop for each set of data in homologous genes variable
         for homology in homologous_genes["data"][0]["homologies"]:
 
             # Capturing only the species names
             species_list.append(homology["target"]["species"])
 
-            # Removing duplicates from the list
+            # Removes duplicates from the list
             unique_species_list = list(set(species_list))
 
             # Converting list into string
