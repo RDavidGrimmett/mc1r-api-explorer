@@ -116,7 +116,7 @@ def append_fasta(amino_acid_seq):
 
 
 # Identify Homologous Genes
-def get_homologous_genes(ensembl_id):
+def get_homologous_species(ensembl_id):
     url = f"https://rest.ensembl.org/homology/id/human/{ensembl_id}"
      
     params = {
@@ -131,11 +131,18 @@ def get_homologous_genes(ensembl_id):
     response = requests.get(url, params=params, headers=headers)
 
     if response.status_code == 200:
+
         data = response.json()
 
-        print (data)
-        
+        species = []
 
+        for homology in data["data"][0]["homologies"]:
+
+            species.append(homology["target"]["species"])
+
+        return species
+
+    
       
 
 
@@ -154,9 +161,10 @@ if __name__ == "__main__":
 
     append_fasta(amino_acids)
 
-    get_homologous_genes(ensembl_id)
+    species = get_homologous_species(ensembl_id)
 
 print("Ensembl ID:", ensembl_id)
 print("Sequence:", sequence)
 print("Longest_ORF:", longest_orf)
 print("Amino Acids:", amino_acids)
+print(species)
