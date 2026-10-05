@@ -5,7 +5,6 @@
 import requests
 import json
 import re
-from pprint import pprint
 from Bio.Seq import Seq
 
 # Get ensembl_id from mygene.info
