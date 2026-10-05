@@ -134,18 +134,18 @@ def get_homologous_species(ensembl_id):
 
         data = response.json()
 
-        species = []
+        species_list = []
 
         for homology in data["data"][0]["homologies"]:
 
-            species.append(homology["target"]["species"])
+            species_list.append(homology["target"]["species"])
 
-        return species
+            species_str = ", ".join(species_list)
 
 # Creates and writes the list of species to TXT file
-def create_txt(species):
+def create_txt(species_str):
     with open ("mc1r_homology_list.txt", "w") as file:
-        file.write(species)
+        file.write(species_str)
 
 
 # Runs functions in sequential order
@@ -163,10 +163,12 @@ if __name__ == "__main__":
 
     append_fasta(amino_acids)
 
-    species = get_homologous_species(ensembl_id)
+    species_str = get_homologous_species(ensembl_id)
+
+    create_txt(species_str)
 
 print("Ensembl ID:", ensembl_id)
 print("Sequence:", sequence)
 print("Longest_ORF:", longest_orf)
 print("Amino Acids:", amino_acids)
-print(species)
+print(species_str)
