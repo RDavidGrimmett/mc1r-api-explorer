@@ -68,7 +68,6 @@ def get_sequence(ensembl_id):
         print(response.text)
         
 
-
 # Creates a FASTA file with ensembl_id and DNA sequence
 def create_fasta(ensembl_id, sequence):
     
@@ -141,7 +140,6 @@ def get_homologous_genes(ensembl_id):
             print(response.text)
             
 
-
 def get_unique_species(homologous_genes):
 
         species_list = []
@@ -159,6 +157,7 @@ def get_unique_species(homologous_genes):
             unique_species_str = ", ".join(unique_species_list)
 
         return unique_species_str
+
 
 # Creates and writes the list of species to TXT file
 def create_txt(unique_species_str):
