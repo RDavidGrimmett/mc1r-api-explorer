@@ -1,5 +1,3 @@
-# This is mc1r_query.py
-
 
 # Imported libraries
 import requests
@@ -155,7 +153,7 @@ def get_unique_species(homologous_genes):
         # List to hold all the species
         species_list = []
 
-        # Creating loop for each set of data in homologous genes variable
+        # Creates loop for each set of data in homologous genes variable
         for homology in homologous_genes["data"][0]["homologies"]:
 
             # Capturing only the species names
@@ -196,11 +194,3 @@ if __name__ == "__main__":
     unique_species_str = get_unique_species (homologous_genes)
 
     create_txt(unique_species_str)
-
-
-#print("Ensembl ID:", ensembl_id)
-#print("Sequence:", sequence)
-#print("Longest_ORF:", longest_orf)
-#print("Amino Acids:", amino_acids)
-#print("Holohous Genes:", homologous_genes)
-#print("Species List", unique_species_str)
