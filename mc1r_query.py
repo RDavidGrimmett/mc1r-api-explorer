@@ -147,7 +147,7 @@ def get_homologous_genes(ensembl_id):
         print("Request failed:", response.status_code)
         print(response.text)
             
-
+# Creates list of unique species from homologous genes
 def get_unique_species(homologous_genes):
 
         # List to hold all the species
