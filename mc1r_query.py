@@ -34,8 +34,8 @@ def get_ensembl_id():
 
     # If connection is unsuccessful, print error
     else:
-            print("Request failed:", response.status_code)
-            print(response.text)
+        print("Request failed:", response.status_code)
+        print(response.text)
 
 
 # Get DNA sequences from ensembl.org
@@ -146,8 +146,8 @@ def get_homologous_genes(ensembl_id):
 
         # If connection is unsuccessful, print error
     else:
-            print("Request failed:", response.status_code)
-            print(response.text)
+        print("Request failed:", response.status_code)
+        print(response.text)
             
 
 def get_unique_species(homologous_genes):
