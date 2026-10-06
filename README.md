@@ -1,5 +1,5 @@
 # mc1r-api-explorer
-A Python script that queries bioinformatics databases using RESTful APIs. Exploring the gene responsible for red hair: MC1R.
+A Python script that queries bioinformatics databases (mygene.info and Ensembl.org) using RESTful APIs. Exploring the gene responsible for red hair: MC1R.
 
 
 ## How-To-Run
